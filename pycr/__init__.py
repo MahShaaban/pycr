@@ -10,3 +10,5 @@ from .helper import pcr_cv
 from .analyze import pcr_ddct
 from .analyze import pcr_dct
 from .analyze import pcr_curve
+from .assessment import pcr_efficiency
+from .assessment import pcr_standard
