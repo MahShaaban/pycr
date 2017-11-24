@@ -2,3 +2,4 @@ Markdown == 2.6.9
 setuptools == 37.0.0
 numpy == 1.13.3
 pandas == 0.21.0
+scipy == 1.0.0
