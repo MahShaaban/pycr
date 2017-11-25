@@ -17,25 +17,26 @@ def pcr_error(df, reference_gene):
 def pcr_normalize(df, reference_gene, mode='subtract'):
     if mode == 'subtract':
         norm = df.apply(lambda x: x - df[reference_gene])
-        return norm
     elif mode == 'divide':
         norm = df.apply(lambda x: x / df[reference_gene])
-        return norm
     else:
         print('User should provide a valid mode: subtract or divide')
+
+    norm = norm.drop(reference_gene, axis=1)
+    return norm
 
 def pcr_calibrate(df, reference_group, mode = 'subtract'):
     if mode == 'subtract':
         calib = df.apply(lambda x: x - df.loc[reference_group],axis=1)
-        return calib
     elif mode == 'divide':
         calib = df.apply(lambda x: x / df.loc[reference_group],axis=1)
-        return calib
     else:
         print('User should provide a valid mode: subtract or divide')
 
+    return calib
+
 def pcr_trend(df, amount):
-    lm = df.apply(lambda x: stats.linregress(x, np.log10(amount)))
+    lm = df.apply(lambda x: stats.linregress(np.log10(amount),x))
     lm = pd.DataFrame(lm)
     lm = lm.apply(lambda x: x.apply(pd.Series).stack()).unstack().reset_index()
     lm.columns = ['gene', 'slope', 'intercept', 'r_value', 'p_value', 'std']

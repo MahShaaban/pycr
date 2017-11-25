@@ -12,3 +12,5 @@ from .analyze import pcr_dct
 from .analyze import pcr_curve
 from .assessment import pcr_efficiency
 from .assessment import pcr_standard
+from .testing import pcr_ttest
+from .testing import pcr_wilcoxon

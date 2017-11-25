@@ -41,11 +41,11 @@ class test_pcr_normalize(TestCase):
 
         d = pycr.pcr_normalize(ct1, 'GAPDH')
         self.assertIs(d.empty, False)
-        self.assertEqual(d.shape, (12, 2))
+        self.assertEqual(d.shape, (12, 1))
 
         d = pycr.pcr_normalize(ct1, 'GAPDH', mode='divide')
         self.assertIs(d.empty, False)
-        self.assertEqual(d.shape, (12, 2))
+        self.assertEqual(d.shape, (12, 1))
 
 class test_pcr_calibrate(TestCase):
     def test_pcr_calibrate(self):
@@ -53,9 +53,10 @@ class test_pcr_calibrate(TestCase):
         group = np.repeat(['brain', 'kidney'], 6)
 
         a = pycr.pcr_average(ct1, group)
-        d = pycr.pcr_calibrate(a, 'brain')
+        n = pycr.pcr_normalize(a, 'GAPDH')
+        d = pycr.pcr_calibrate(n, 'brain')
         self.assertIs(d.empty, False)
-        self.assertEqual(d.shape, (2, 2))
+        self.assertEqual(d.shape, (2, 1))
 
 class test_pcr_trend(TestCase):
     def test_pcr_trend(self):

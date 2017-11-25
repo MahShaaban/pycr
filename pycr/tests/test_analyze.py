@@ -4,17 +4,25 @@ import pycr
 import numpy as np
 import pandas as pd
 
-
 class test_pcr_ddct(TestCase):
-    def test_is_string(self):
+    def test_pcr_ddct(self):
         ct1 = pd.read_csv('pycr/ct1.csv')
         group = np.repeat(['brain', 'kidney'], 6)
 
         d = pycr.pcr_ddct(ct1, group, 'GAPDH', 'brain')
         self.assertIs(d.empty, False)
-        self.assertEqual(d.shape, (4, 7))
+        self.assertEqual(d.shape, (2, 7))
 
         d = pycr.pcr_ddct(ct1, group, 'GAPDH', 'brain', 'same_tube')
+        self.assertIs(d.empty, False)
+        self.assertEqual(d.shape, (2, 7))
+
+class test_pcr_dct(TestCase):
+    def test_pcr_dct(self):
+        ct1 = pd.read_csv('pycr/ct1.csv')
+        group = np.repeat(['brain', 'kidney'], 6)
+
+        d = pycr.pcr_dct(ct1, group, 'brain')
         self.assertIs(d.empty, False)
         self.assertEqual(d.shape, (4, 7))
 
@@ -30,4 +38,4 @@ class test_pcr_curve(TestCase):
 
         d = pycr.pcr_curve(ct1, group, 'GAPDH', 'brain', slope, intercept)
         self.assertIs(d.empty, False)
-        self.assertEqual(d.shape, (4, 7))
+        self.assertEqual(d.shape, (2, 7))

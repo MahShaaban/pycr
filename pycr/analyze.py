@@ -48,24 +48,13 @@ def pcr_ddct(df, group, reference_gene, reference_group, mode='separate_tube'):
 
     return dat
 
-def pcr_dct(df, group, reference_group, mode = 'separate_tube'):
-    if mode == 'separate_tube':
-        # average
-        ave = pycr.pcr_average(df, group)
-        dct = pycr.pcr_calibrate(ave, reference_group)
+def pcr_dct(df, group, reference_group):
+    # average dct
+    ave = pycr.pcr_average(df, group)
+    dct = pycr.pcr_calibrate(ave, reference_group)
 
-        # error
-        error = pycr.pcr_sd(df, group)
-    elif mode == 'same_tube':
-        # average
-        calib = pycr.pcr_calibrate(df, reference_group)
-        dct = pycr.pcr_average(calib, group)
-
-        # error
-        calib = pycr.pcr_calibrate(df, reference_group)
-        error = pycr.pcr_sd(calib, group)
-    else:
-        print('User should provide a valid mode: separate_tube or same_tube')
+    # error
+    error = pycr.pcr_sd(df, group)
 
     # transform
     dct = dct.unstack().reset_index()

@@ -11,7 +11,7 @@ class test_pcr_efficiency(TestCase):
 
         d = pycr.pcr_efficiency(ct3, amount, 'GAPDH')
         self.assertIs(d.empty, False)
-        self.assertEqual(d.shape, (2, 6))
+        self.assertEqual(d.shape, (1, 6))
 
 class test_pcr_standard(TestCase):
     def test_pcr_standard(self):
